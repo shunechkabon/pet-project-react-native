@@ -9,10 +9,12 @@ export default StyleSheet.create({
     },
     title: {
         fontSize: 24,
+        color: 'black',
         fontFamily: fonts.ComfortaaRegular,
     },
     welcomeText: {
-        fontSize: 18,
+        fontSize: 16,
+        color: 'black',
         fontFamily: fonts.MontserratRegular,
     },
     buttonContainer: {
@@ -21,25 +23,45 @@ export default StyleSheet.create({
         backgroundColor: '#EAE9FB',
         padding: 4,
         borderRadius: 20,
-        marginTop: 30,
+        marginTop: 32,
         marginBottom: 30,
     },
-    loginBtn: {
+    // loginBtn: {
+    //     alignItems: 'center',
+    //     backgroundColor: '#F8F8F9',
+    //     padding: 10,
+    //     borderRadius: 20,
+    //     flex: 1,
+    // },
+    // registerBtn: {
+    //     alignItems: 'center',
+    //     padding: 10,
+    //     borderRadius: 20,
+    //     flex: 1,
+    // },
+    activeTab: {
         alignItems: 'center',
         backgroundColor: '#F8F8F9',
         padding: 10,
         borderRadius: 20,
         flex: 1,
     },
-    registerBtn: {
+    disabledTab: {
         alignItems: 'center',
         padding: 10,
         borderRadius: 20,
         flex: 1,
+        opacity: 0.7,
+    },
+    authText: {
+        color: '#0B0B0B',
+        fontSize: 14,
+        fontFamily: fonts.MontserratRegular,
     },
     titleContainer: {
         gap: 4,
     },
+
     inputContainer: {
         borderWidth: 1,
         borderRadius: 20,
@@ -56,26 +78,30 @@ export default StyleSheet.create({
     },
     input: {
         padding: 0,
+        flex: 1,
+        fontFamily: fonts.MontserratRegular,
     },
     activePasswordBtn: {
-        height: 20,
-        width: 20,
+        height: 15,
+        width: 15,
         backgroundColor: '#6a932b',
     },
     disabledPasswordBtn: {
-        height: 20,
-        width: 20,
+        height: 15,
+        width: 15,
         backgroundColor: '#7a5143',
     },
     loginBtnContainer: {
-        marginTop: 50,
-        padding: 12,
-        backgroundColor: '#C2A1F9',
-        borderRadius: 20,
+        borderRadius: 25,
+        backgroundColor: '#7A71BA',
+        paddingVertical: 12,
         alignItems: 'center',
-        color: 'white',
     },
     loginText: {
         color: 'white',
+    },
+    formContainer: {
+        marginTop: 28,
+        marginBottom: 68,
     },
 });

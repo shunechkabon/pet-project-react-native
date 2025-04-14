@@ -2,7 +2,7 @@ import React from 'react';
 // import React, { useEffect } from 'react';
 import { SafeAreaView } from 'react-native';
 // import { DevSettings, SafeAreaView, NativeModules } from 'react-native';
-import LoginPage from './src/screen/Auth/Login/index';
+import RootNavigation from './src/navigation';
 
 function App(): React.JSX.Element {
   // useEffect(() => {
@@ -17,7 +17,7 @@ function App(): React.JSX.Element {
   // }, []);
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <LoginPage />
+      <RootNavigation />
     </SafeAreaView>
   );
 }
