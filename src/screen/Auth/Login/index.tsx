@@ -9,7 +9,7 @@ import {
     TouchableWithoutFeedback,
     Keyboard,
 } from 'react-native';
-import s from './styles';
+import s from '../styles';
 import { ViewPassIcon, HidePassIcon } from '../../../assets/icons/index';
 
 interface IInputValue{
@@ -19,7 +19,7 @@ interface IInputValue{
     errorPassword: null | string,
 }
 
-export default function LoginPage() {
+function LoginPage() {
     const [isPassHidden, setIsPassHidden] = useState(true);
     const [inputValues, setInputValues] = useState<IInputValue>({
         email: '',
@@ -131,3 +131,5 @@ export default function LoginPage() {
         </TouchableWithoutFeedback>
     );
 }
+
+export default LoginPage;

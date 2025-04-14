@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react';
-import { DevSettings, SafeAreaView, NativeModules } from 'react-native';
-import LoginPage from './src/screen/Auth/Login';
+import React from 'react';
+// import React, { useEffect } from 'react';
+import { SafeAreaView } from 'react-native';
+// import { DevSettings, SafeAreaView, NativeModules } from 'react-native';
+import LoginPage from './src/screen/Auth/Login/index';
 
 function App(): React.JSX.Element {
-  useEffect(() => {
-    if (__DEV__) {
-      DevSettings.addMenuItem('Debugging With debugger', () => {
-        NativeModules.DevSettings.setIsDebuggingRemotely(true);
-      });
-      DevSettings.addMenuItem('Stop Debugging With debugger', () => {
-        NativeModules.DevSettings.setIsDebuggingRemotely(false);
-      });
-    }
-  }, []);
-  console.log('Info', { age: 25, array: [1, 2, 3, 4, { name: 'sasha' }] });
-  console.log('Info', {age:25, array:[1,2,3,4, {name: 'sasha'}]});
+  // useEffect(() => {
+  //   if (__DEV__) {
+  //     DevSettings.addMenuItem('Debugging With debugger', () => {
+  //       NativeModules.DevSettings.setIsDebuggingRemotely(true);
+  //     });
+  //     DevSettings.addMenuItem('Stop Debugging With debugger', () => {
+  //       NativeModules.DevSettings.setIsDebuggingRemotely(false);
+  //     });
+  //   }j
+  // }, []);
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <LoginPage />
