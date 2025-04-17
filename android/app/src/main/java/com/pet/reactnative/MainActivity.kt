@@ -1,4 +1,4 @@
-package com.pet
+package com.pet.reactnative
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

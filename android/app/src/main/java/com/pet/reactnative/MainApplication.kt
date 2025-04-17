@@ -1,4 +1,4 @@
-package com.pet
+package com.pet.reactnative
 
 import android.app.Application
 import com.facebook.react.PackageList
