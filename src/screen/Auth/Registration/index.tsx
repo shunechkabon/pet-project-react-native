@@ -8,6 +8,10 @@ import {RegistrationSchema} from '../utils/validations';
 import DefaultButton from '../../../common/components/DefaultButton/index';
 import { useEffect, useState } from 'react';
 import auth from '@react-native-firebase/auth';
+import { CommonActions, useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackNavigation } from '../../../navigation/types';
+import { ScreenNames } from '../../../constants/screenNames';
 
 interface ITouched {
     email: boolean;
@@ -27,6 +31,8 @@ export default function Registration() {
         confirmPassword: false,
     });
 
+    const navigation = useNavigation<StackNavigationProp<RootStackNavigation>>();
+
     const registerUser = async (
         email: string,
         password: string,
@@ -34,7 +40,14 @@ export default function Registration() {
     ) => {
         try {
             const result = await auth().createUserWithEmailAndPassword(email, password);
-            console.log('result', result);
+            if (result.user) {
+                navigation.dispatch(
+                    CommonActions.reset({
+                        index: 1,
+                        routes: [{name: ScreenNames.LOGGED_IN_STACK}],
+                    }),
+                );
+            }
         } catch (e: any) {
             console.log('ERROR', e);
             if (e.code === 'auth/email-already-in-use') {

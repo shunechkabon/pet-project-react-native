@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
 import { View } from 'react-native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackNavigation } from '../../../navigation/types';
+import { ScreenNames } from '../../../constants/screenNames';
 import s from '../styles';
 import AuthHeader from '../components/AuthHeader/index';
 import Input from '../../../common/components/Input/index';
@@ -21,6 +25,9 @@ export default function LoginPage() {
         errorEmail: null,
         errorPassword: null,
     });
+
+    const navigation = useNavigation<StackNavigationProp<RootStackNavigation>>();
+
     const handleChangeInput = (
         key: 'email' | 'password' | 'errorEmail' | 'errorPassword',
         value: null | string,
@@ -38,6 +45,7 @@ export default function LoginPage() {
             handleChangeInput('errorEmail', null);
         }
     };
+
     const checkPassword = (text: string) => {
         if (text.length < 8) {
             handleChangeInput('errorPassword', 'Password must be more than 8 symbols');
@@ -49,7 +57,14 @@ export default function LoginPage() {
     const onLogin = async (email: string, password: string) => {
         try {
             const result = await auth().signInWithEmailAndPassword(email, password);
-            console.log('RESULT', result);
+            if (result.user) {
+                navigation.dispatch(
+                    CommonActions.reset({
+                        index: 1,
+                        routes: [{name: ScreenNames.LOGGED_IN_STACK}],
+                    }),
+                );
+            }
         } catch (e) {
             console.log('e', e);
         }
