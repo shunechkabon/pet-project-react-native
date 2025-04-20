@@ -8,11 +8,16 @@ const LoggedOutStackScreens:LoggedOutStackType = {
 };
 
 export type LoggedInStackType = {
-    HOME_PAGE: undefined,
+    TAB_BAR_STACK: undefined,
 }
 const LoggedInStackScreens:LoggedInStackType = {
-    HOME_PAGE: undefined,
+    TAB_BAR_STACK: undefined,
 };
+
+export type TabBarStackType = {
+    HOME_PAGE: undefined,
+    FAVORITE_PAGE: undefined,
+}
 
 export type RootStackNavigation = {
     LOGGED_IN_STACK: {screens: keyof typeof LoggedInStackScreens},
