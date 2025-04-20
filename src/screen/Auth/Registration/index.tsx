@@ -1,9 +1,9 @@
 import AuthLayout from '../components/AuthLayout/index';
 import AuthHeader from '../components/AuthHeader/index';
 import s from '../styles';
-import {View} from 'react-native';
+import { View, Keyboard } from 'react-native';
 import Input from '../../../common/components/Input/index';
-import {Formik, FormikValues} from 'formik';
+import {Formik, FormikHelpers, FormikProps } from 'formik';
 import {RegistrationSchema} from '../utils/validations';
 import DefaultButton from '../../../common/components/DefaultButton/index';
 import { useEffect, useState } from 'react';
@@ -14,6 +14,11 @@ interface ITouched {
     password: boolean;
     confirmPassword: boolean;
 }
+interface IRegistrationForm {
+    email: string;
+    password: string;
+    confirmPassword: string;
+}
 
 export default function Registration() {
     const [touched, setTouched] = useState<ITouched>({
@@ -22,20 +27,23 @@ export default function Registration() {
         confirmPassword: false,
     });
 
-    const registrateUser = async (email: string, password: string) => {
+    const registerUser = async (
+        email: string,
+        password: string,
+        formikHelpers: FormikHelpers<IRegistrationForm>
+    ) => {
         try {
             const result = await auth().createUserWithEmailAndPassword(email, password);
             console.log('result', result);
-        } catch (e) {
+        } catch (e: any) {
             console.log('ERROR', e);
+            if (e.code === 'auth/email-already-in-use') {
+                formikHelpers.setErrors({ email: 'email-already-in-use' });
+            }
         }
     };
 
     useEffect(() => {
-        fetch('https://www.google.com')
-    .then(() => console.log('✅ Интернет работает в эмуляторе'))
-            .catch((e) => console.log('❌ Интернет НЕ работает в эмуляторе', e));
-
         const subscriber = auth().onAuthStateChanged((user) => {
             console.log('user', user);
         });
@@ -45,14 +53,16 @@ export default function Registration() {
     return (
         <AuthLayout>
             <AuthHeader activeTab={'registration'} />
-            <Formik
+            <Formik<IRegistrationForm>
                 initialValues={{
                     email: '',
                     password: '',
                     confirmPassword: '',
                 }}
-                onSubmit={value => {
-                    registrateUser(value.email, value.password);
+                onSubmit={async (values, formikHelpers) => {
+                    await registerUser(values.email, values.password, formikHelpers);
+                    Keyboard.dismiss();
+                    formikHelpers.resetForm();
                 }}
                 validationSchema={RegistrationSchema()}>
                 {({
@@ -61,19 +71,19 @@ export default function Registration() {
                     handleSubmit,
                     isValid,
                     errors,
-                }: FormikValues) => (
+                }: FormikProps<IRegistrationForm>) => (
                     <>
                         <View style={s.formContainer}>
                             <Input
                                 onFocus={() =>
                                     setTouched(prevState => ({ ...prevState, email: true }))
-                }
+                                }
                                 value={values.email}
                                 onChangeText={value => {
                                     setFieldValue('email', value);
                                 }}
                                 placeholder={'Email'}
-                                error={touched.email && errors.email}
+                                error={touched.email ? errors.email : undefined}
                             />
                             <Input
                                 onFocus={() =>
@@ -84,7 +94,8 @@ export default function Registration() {
                                     setFieldValue('password', value);
                                 }}
                                 placeholder={'Password'}
-                                error={touched.password && errors.password}
+                                error={touched.password ? errors.password : undefined}
+                                secureTextEntry={true}
                             />
                             <Input
                                 onFocus={() =>
@@ -98,7 +109,8 @@ export default function Registration() {
                                     setFieldValue('confirmPassword', value);
                                 }}
                                 placeholder={'Confirm password'}
-                                error={touched.confirmPassword && errors.confirmPassword}
+                                error={touched.confirmPassword ? errors.confirmPassword : undefined}
+                                secureTextEntry={true}
                             />
                         </View>
                         <DefaultButton
